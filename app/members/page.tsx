@@ -8,30 +8,34 @@ import { symlink } from "fs";
 
 export default async function Page() {
     const data = await getMembersList({ limit: MEMBERS_LIST_LIMIT});
+if (!data || data.contents.length === 0) {
     return (
-        <div className={styles.container}>
-            {data.contents.length === 0 ? (
-                <p className={styles.empty}>メンバーが登録されていません。</p>
-            ) : (
-                <ul>
-                    {data.contents.map((member) => (
-                        <li key={member.id} className={styles.list}>
-                            <Image
-                            src={member.image.url}
-                            alt=""
-                            width={member.image.width}
-                            height={member.image.height}
-                            className={styles.image}
-                            />
-                            <dl>
-                                <dt className={styles.name}>{member.name}</dt>
-                                <dd className={styles.position}>{member.position}</dd>
-                                <dd className={styles.profile}>{member.profile}</dd>
-                            </dl>
-                        </li>
-                    ))}                    
-                </ul>
-            )}
-        </div>
+      <div className={styles.container}>
+        <p className={styles.empty}>メンバーが登録されていません。</p>
+      </div>
     );
+  }
+
+  return (
+    <div className={styles.container}>
+      <ul>
+        {data.contents.map((member) => (
+          <li key={member.id} className={styles.list}>
+            <Image
+              src={member.image.url}
+              alt=""
+              width={member.image.width}
+              height={member.image.height}
+              className={styles.image}
+            />
+            <dl>
+              <dt className={styles.name}>{member.name}</dt>
+              <dd className={styles.position}>{member.position}</dd>
+              <dd className={styles.profile}>{member.profile}</dd>
+            </dl>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
