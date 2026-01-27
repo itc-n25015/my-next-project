@@ -5,6 +5,7 @@ import type {
     MicroCMSImage,
     MicroCMSListContent,
 } from "microcms-js-sdk";
+import { exitCode } from "process";
 
 export type Member = {
     name: string;
@@ -67,6 +68,18 @@ export const getNewsDetail = async (
 ) => {
     const detailData = await client.getListDetail<News>({
         endpoint: "news",
+        contentId,
+        queries,
+    });
+    return detailData;
+};
+
+export const getCategoryDetail = async (
+    contentId: string,
+    queries?: MicroCMSQueries,
+) => {
+    const detailData = await client.getListDetail<Category>({
+        endpoint: "categories",
         contentId,
         queries,
     });
